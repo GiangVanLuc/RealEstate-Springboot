@@ -78,24 +78,24 @@
         </li>
     </ul>
 
-<%--    <ul class="nav nav-list">--%>
-<%--        <li class="">--%>
-<%--            <a href="#" class="dropdown-toggle">--%>
-<%--                <i class="menu-icon fa fas fa-users"></i>--%>
-<%--                <span class="menu-text">Quản Lý Khách Hàng</span>--%>
-<%--            </a>--%>
-<%--            <b class="arrow"></b>--%>
-<%--            <ul class="submenu">--%>
-<%--                <li class="">--%>
-<%--                    <a href='/admin/customer-list'>--%>
-<%--                        <i class="menu-icon fa fa-caret-right"></i>--%>
-<%--                        Danh sách khách hàng--%>
-<%--                    </a>--%>
-<%--                    <b class="arrow"></b>--%>
-<%--                </li>--%>
-<%--            </ul>--%>
-<%--        </li>--%>
-<%--    </ul>--%>
+    <ul class="nav nav-list">
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fas fa-users"></i>
+                <span class="menu-text">Quản Lý Khách Hàng</span>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href='/admin/customer-list'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách khách hàng
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+    </ul>
     <div class="sidebar-toggle sidebar-collapse">
         <i class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
     </div>

@@ -344,6 +344,23 @@
         $('#buildingId').val();
     }
 
+    function loadStaffs(buildingId) {
+         $.ajax({
+            type: "GET",
+            url: "${buildingAPI}" + buildingId / 'staffs',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (respond) {
+                console.log("Success");
+            },
+            error: function (respond) {
+                console.log("Fail");
+                console.log(respond);
+            }
+        })
+}
+
     $('#btnassignmentBuilding').click(function (e) {
         e.preventDefault();
         var data = {};
