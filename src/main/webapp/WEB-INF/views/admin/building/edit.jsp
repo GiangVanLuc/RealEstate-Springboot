@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingAPI" value="/api/building"/>
+<c:url var="buildingList" value = "/admin/building-list"/>
 <html>
 <head>
     <title>Thêm tòa nhà</title>
@@ -46,56 +47,53 @@
 
             <!-- Bảng danh sách -->
             <form:form modelAttribute="buildingEdit" id="listForm" method="GET">
-                <div class="row" bis_skin_checked="1">
-                    <div class="col-xs-12" bis_skin_checked="1">
-                        <form class="form-horizontal" role="form" id="form-edit">
+                <div class="row" >
+                    <div class="col-xs-12" >
+                        <form class="form-horizontal" role="form" >
                             <div class="form-group">
-                                <label class="col-xs-3">Tên tòa nhà</label>
+                                <form:label class="col-xs-3" path = "name">Tên tòa nhà</form:label>
                                 <div class="col-xs-9">
                                     <form:input class="form-control" path="name"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3">Quận</label>
-                                <div class="col-xs-9">
-                                    <select id="districtid" class="form-control" name="districtid">
-                                        <option value="">--Chọn Quận--</option>
-                                        <option value="1">Quận 1</option>
-                                        <option value="2">Quận 2</option>
-                                        <option value="3">Quận 3</option>
-                                        <option value="4">Quận 10</option>
-                                    </select>
+                                <form:label class="col-xs-3" path = "district">Quận</form:label>
+                                 <div class="col-xs-9">
+                                    <form:select class="form-control" path="district">
+                                        <form:option value="">---Chọn Quận---</form:option>
+                                        <form:options items="${districts}"/>
+                                    </form:select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3">Phường</label>
+                                <form:label class="col-xs-3" path = "ward">Phường</form:label>
                                 <div class="col-xs-9">
                                     <form:input class="form-control" type="text" path="ward"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3">Đường</label>
+                                <form:label class="col-xs-3" path = "street">Đường</form:label>
                                 <div class="col-xs-9">
-                                        <%--                                    <input class="form-control" type="text" id="street" name="street">--%>
+                                        <%-- <input class="form-control" type="text" id="street" name="street">--%>
                                     <form:input class="form-control" type="text" path="street"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3">Kết cấu</label>
+                                <form:label class="col-xs-3" path = "structure">Kết cấu</form:label>
                                 <div class="col-xs-9">
-                                    <form:input class="form-control" path="str"/>
+                                    <form:input class="form-control" path="structure"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-xs-3">Số tầng hầm</label>
                                 <div class="col-xs-9">
-                                    <input class="form-control" type="number" id="nameofbasement" name="nameofbasement">
+                                    <input class="form-control" type="number" id="nameofbasement" name="nameofbasement" value = "">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-xs-3">Diện tích sàn</label>
                                 <div class="col-xs-9">
-                                    <input class="form-control" type="text" id="floorarea" name="floorarea">
+                                    <input class="form-control" type="text" id="floorarea" name="floorarea" value ="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -198,17 +196,7 @@
                             <div class="form-group">
                                 <span class="col-xs-3">Loại tòa nhà</span>
                                 <div class="col-xs-9">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="typeCode" name="typeCode" value="noi-that"/> Nội thất
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="typeCode" name="typeCode" value="nguyen-can"/> Nguyên
-                                        Căn
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="typeCode" name="typeCode" value="tang-tret"/> Tầng
-                                        Trệt
-                                    </label>
+                                    <form:checkboxes items="${typeCodes}" path="typeCode"/>
                                 </div>
                             </div>
                             <div class=form-group>
@@ -230,17 +218,12 @@
                                 <label class="col-xs-3"></label>
                                 <div class="col-xs-9">
                                     <c:if test="${not empty buildingEdit.id}">
-                                        <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding">Cập
-                                            nhật tòa
-                                            nhà
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Hủy thao tác</button>
+                                        <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding">Cập nhật tòa nhà</button>
+                                        <button type="button" class="btn btn-primary" id = "btnCancel">Hủy thao tác</button>
                                     </c:if>
                                     <c:if test="${empty buildingEdit.id}">
-                                        <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding">Thêm
-                                            tòa nhà
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Hủy thao tác</button>
+                                        <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding">Thêm tòa nhà</button>
+                                        <button type="button" class="btn btn-primary" id = "btnCancel">Hủy thao tác</button>
                                     </c:if>
                                 </div>
                             </div>
@@ -260,7 +243,7 @@
     $('#btnAddOrUpdateBuilding').click(function () {
         var data = {};
         var typeCode = [];
-        var formData = $('#form-edit').serializeArray();
+        var formData = $('#listForm').serializeArray();
         $.each(formData, function (i, v) {
             if (v.name != 'typeCode') {
                 data["" + v.name + ""] = v.value;
@@ -269,6 +252,15 @@
             }
         })
         data['typeCode'] = typeCode;
+        if(typeCode != ''){
+            addOrUpdateBuilding(data);
+        }
+        else{
+            window.location.href = "<c:url value = "/admin/building-edit?typeCode=require" />";
+        }
+    });
+
+    function addOrUpdateBuilding(data) {
         // call API
         $.ajax({
             type: "POST",
@@ -284,7 +276,10 @@
                 console.log(respond);
             }
         })
-    });
+}
+    $('#btnCancel').click(function () {
+        window.location.href = "${buildingList}";
+});
 
 </script>
 </body>
