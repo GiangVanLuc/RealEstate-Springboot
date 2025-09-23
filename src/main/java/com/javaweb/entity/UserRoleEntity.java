@@ -1,13 +1,13 @@
-package com.javaweb.entity;
-
-
+//package com.javaweb.entity;
+//
+//
 //import javax.persistence.*;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.Table;
 //
 //@Entity
 //@Table(name = "user_role")
-public class UserRoleEntity{
+//public class UserRoleEntity{
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +44,5 @@ public class UserRoleEntity{
 //	public void setId(Long id) {
 //		this.id = id;
 //	}
-
-}
+//
+//}

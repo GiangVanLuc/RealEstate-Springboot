@@ -278,9 +278,9 @@
     </div>
     <!-- /.page-content -->
 </div>
-</div>
 
-<div class="modal" id="assingmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+
+<div class="modal" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -302,28 +302,7 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td class="center">
 
-                            <input type="checkbox" id="checkbox_1" value="1" checked>
-
-                        </td>
-
-                        <td>
-                            Nguyễn Văn A
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="center">
-
-                            <input type="checkbox" id="checkbox_2" value="2">
-
-                        </td>
-
-                        <td>
-                            Trần Văn C
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
                 <input type="hidden" id="buildingId" name="Building" value="">
@@ -340,23 +319,37 @@
 </div>
 <script>
     function assignmentBuilding(buildingid) {
-        $("#assingmentBuildingModal").modal("show");
+        $("#assignmentBuildingModal").modal("show");
+        loadStaffs(buildingid);
         $('#buildingId').val();
+
+
     }
 
     function loadStaffs(buildingId) {
          $.ajax({
             type: "GET",
-            url: "${buildingAPI}" + buildingId / 'staffs',
-            data: JSON.stringify(data),
-            contentType: "application/json",
+            url: "${buildingAPI}/" + buildingId + '/staffs',
+            // data: JSON.stringify(data),
+            // contentType: "application/json",
             dataType: "JSON",
-            success: function (respond) {
+            success: function (response) {
+                var row = '';
+                $.each(response.data, function (index, item) {
+                    row += '<tr>';
+                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffid + ' class = "check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center">' + item.fullName + '</td>';
+                    row += '</tr>';
+
+
+                });
+                $('#staffList tbody').empty().html(row);
                 console.log("Success");
             },
-            error: function (respond) {
+            error: function (response) {
                 console.log("Fail");
-                console.log(respond);
+                 window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                console.log(response);
             }
         })
 }
@@ -394,16 +387,16 @@
     function deleteBuildings(data){
          $.ajax({
             type: "DELETE",
-            url: "${buildingAPI}" + data,
+            url: "${buildingAPI}/" + data,
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",
-            success: function (respond) {
+            success: function (response) {
                 console.log("Success");
             },
-            error: function (respond) {
+            error: function (response) {
                 console.log("Fail");
-                console.log(respond);
+                console.log(response);
             }
         })
     }

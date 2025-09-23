@@ -1,169 +1,306 @@
 package com.javaweb.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import java.util.Objects;
 import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "building")
-public class BuildingEntity extends BaseEntity {
+public class BuildingEntity extends BaseEntity  {
+
 
     @Column(name = "name")
     private String name;
 
+
+    @Column(name = "street")
+    private String street;
+
     @Column(name = "ward")
     private String ward;
-
-    @Column(name = "district")
-    private String district;
 
     @Column(name = "structure")
     private String structure;
 
     @Column(name = "numberofbasement")
-    private Long numberOfBasement;
+    private Integer numberOfBasement;
 
     @Column(name = "floorarea")
-    private Long floorArea;
+    private Integer floorArea;
 
     @Column(name = "direction")
     private String direction;
 
     @Column(name = "level")
-    private Long level;
+    private String level;
 
     @Column(name = "rentprice")
-    private Long rentPrice;
+    private Integer rentPrice;
 
     @Column(name = "rentpricedescription")
     private String rentPriceDescription;
 
     @Column(name = "servicefee")
     private String serviceFee;
-    @Column(name = "street")
-    private String street;
 
     @Column(name = "carfee")
-    private Long carFee;
+    private String carFee;
 
-    @Column(name = "motofee")
-    private Long motoFee;
+
 
     @Column(name = "overtimefee")
-    private Long overTimeFee;
+    private String overtimeFee;
 
     @Column(name = "waterfee")
-    private Long waterFee;
+    private String waterFee;
 
     @Column(name = "electricityfee")
-    private Long electricityFee;
+    private String electricityFee;
 
     @Column(name = "deposit")
-    private Long deposit;
+    private String deposit;
 
     @Column(name = "payment")
-    private Long payment;
+    private String payment;
 
     @Column(name = "renttime")
-    private Long rentTime;
+    private String rentTime;
 
     @Column(name = "decorationtime")
-    private Long decorationTime;
+    private String decorationTime;
 
     @Column(name = "brokeragefee")
     private Long brokerageFee;
 
+
+    @Column(name = "map")
+    private String map;
+
     @Column(name = "managername")
     private String managerName;
 
-    @Column(name = "managerphonenumber")
-    private String managerPhoneNumber;
-
-    @OneToMany(mappedBy="building", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+    @Column(name = "managerphone")
+    private String managerPhone;
 
 
-    public Long getNumberofbasement() {
-        return numberOfBasement;
+    @ManyToMany(mappedBy = "buildingEntities")
+    private List<UserEntity> userEntities = new ArrayList<UserEntity>();
+
+    public String getElectricityFee() {
+        return electricityFee;
     }
-    public void setNumberofbasement(Long numberOfBasement) {
-        this.numberOfBasement = numberOfBasement;
+
+    public void setElectricityFee(String electricityFee) {
+        this.electricityFee = electricityFee;
     }
-    public String getName() {
-        return name;
+
+    public Integer getFloorArea() {
+        return floorArea;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void setFloorArea(Integer floorArea) {
+        this.floorArea = floorArea;
     }
+
+    public Integer getRentPrice() {
+        return rentPrice;
+    }
+
+    public void setRentPrice(Integer rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
+    public String getRentPriceDescription() {
+        return rentPriceDescription;
+    }
+
+    public void setRentPriceDescription(String rentPriceDescription) {
+        this.rentPriceDescription = rentPriceDescription;
+    }
+
+    public String getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(String serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public String getCarFee() {
+        return carFee;
+    }
+
+    public void setCarFee(String carFee) {
+        this.carFee = carFee;
+    }
+
+
+
+    public String getWaterFee() {
+        return waterFee;
+    }
+
+    public void setWaterFee(String waterFee) {
+        this.waterFee = waterFee;
+    }
+
+    public String getOvertimeFee() {
+        return overtimeFee;
+    }
+
+    public void setOvertimeFee(String overtimeFee) {
+        this.overtimeFee = overtimeFee;
+    }
+
+    public String getRentTime() {
+        return rentTime;
+    }
+
+    public void setRentTime(String rentTime) {
+        this.rentTime = rentTime;
+    }
+
+    public String getDecorationTime() {
+        return decorationTime;
+    }
+
+    public void setDecorationTime(String decorationTime) {
+        this.decorationTime = decorationTime;
+    }
+
+    public Long getBrokerageFee() {
+        return brokerageFee;
+    }
+
+    public void setBrokerageFee(Long brokerageFee) {
+        this.brokerageFee = brokerageFee;
+    }
+
+
 
     public String getManagerName() {
         return managerName;
     }
+
     public void setManagerName(String managerName) {
         this.managerName = managerName;
     }
-    public String getManagerPhoneNumber() {
-        return managerPhoneNumber;
+
+    public String getManagerPhone() {
+        return managerPhone;
     }
-    public void setManagerPhoneNumber(String managerPhoneNumber) {
-        this.managerPhoneNumber = managerPhoneNumber;
+
+    public void setManagerPhone(String managerPhone) {
+        this.managerPhone = managerPhone;
     }
-    public String getWard() {
-        return ward;
+
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
     }
-    public void setWard(String ward) {
-        this.ward = ward;
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
+
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getStreet() {
         return street;
     }
+
     public void setStreet(String street) {
         this.street = street;
     }
 
+    public String getWard() {
+        return ward;
+    }
 
-    public Long getFloorArea() {
-        return floorArea;
+    public void setWard(String ward) {
+        this.ward = ward;
     }
-    public void setFloorArea(Long floorArea) {
-        this.floorArea = floorArea;
+
+    public String getStructure() {
+        return structure;
     }
-    //	public String getEmptyArea() {
-//		return emptyArea;
-//	}
-//	public void setEmptyArea(String emptyArea) {
-//		this.emptyArea = emptyArea;
-//	}
-    public Long getRentPrice() {
-        return rentPrice;
+
+    public void setStructure(String structure) {
+        this.structure = structure;
     }
-    public void setRentPrice(Long rentPrice) {
-        this.rentPrice = rentPrice;
+
+
+
+    public String getDirection() {
+        return direction;
     }
-    public String getServiceFee() {
-        return serviceFee;
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
-    public void setServiceFee(String serviceFee) {
-        this.serviceFee = serviceFee;
+
+    public String getLevel() {
+        return level;
     }
-    public Long getBrokerageFee() {
-        return brokerageFee;
+
+    public void setLevel(String level) {
+        this.level = level;
     }
-    public void setBrokerageFee(Long brokerageFee) {
-        this.brokerageFee = brokerageFee;
+
+
+
+    public String getCarfee() {
+        return carFee;
+    }
+
+    public void setCarfee(String carfee) {
+        this.carFee = carfee;
+    }
+
+
+    public String getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+
+
+
+    public Integer getNumberOfBasement() {
+        return numberOfBasement;
+    }
+
+    public void setNumberOfBasement(Integer numberOfBasement) {
+        this.numberOfBasement = numberOfBasement;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
     }
 
 

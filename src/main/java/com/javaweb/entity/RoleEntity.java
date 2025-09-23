@@ -55,12 +55,11 @@ public class RoleEntity extends BaseEntity {
         this.code = code;
     }
 
-    public List<UserEntity> getUsers() {
+    public List<UserEntity> getUser() {
         return user;
     }
 
-    public void setUsers(List<UserEntity> users) {
-        this.user = users;
+    public void setUser(List<UserEntity> user) {
+        this.user = user;
     }
-
 }

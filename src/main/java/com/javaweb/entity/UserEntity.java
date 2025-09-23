@@ -3,6 +3,7 @@ package com.javaweb.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
@@ -10,9 +11,7 @@ public class UserEntity extends BaseEntity {
 
     private static final long serialVersionUID = -4988455421375043688L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @Column(name = "username", nullable = false, unique = true)
     private String userName;
@@ -36,9 +35,20 @@ public class UserEntity extends BaseEntity {
     private List<RoleEntity> roles = new ArrayList<>();
 
 
-//    @OneToMany(mappedBy="staffs", fetch = FetchType.LAZY)
-//    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-//
+    @ManyToMany
+    @JoinTable(name = "assignmentbuilding",
+            joinColumns = @JoinColumn(name = "staffid"),
+            inverseJoinColumns = @JoinColumn(name = "buildingid"))
+    private List<BuildingEntity> buildingEntities = new ArrayList<>();
+
+    public List<BuildingEntity> getBuildingEntities() {
+        return buildingEntities;
+    }
+
+    public void setBuildingEntities(List<BuildingEntity> buildingEntities) {
+        this.buildingEntities = buildingEntities;
+    }
+
 //    @OneToMany(mappedBy="users", fetch = FetchType.LAZY)
 //    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
 
@@ -94,13 +104,21 @@ public class UserEntity extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-        @Override
-    public Long getId() {
-        return id;
+
+    // Thêm 2 phương thức equals và hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        // getId() này sẽ được kế thừa từ BaseEntity
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public void setId(Long id) {
-        this.id = id;
+    public int hashCode() {
+        // getId() này sẽ được kế thừa từ BaseEntity
+        return Objects.hash(getId());
     }
+
 }
