@@ -1,8 +1,13 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.builder.BuildingSearchBuilder;
+import com.javaweb.converter.BuildingConverter;
+import com.javaweb.converter.BuildingSearchBuilderConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.model.request.BuildingSearchRequest;
+import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
@@ -13,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +30,13 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BuildingSearchBuilderConverter buildingSearchBuilderConverter;
+
+    @Autowired
+    private BuildingConverter buildingConverter;
+
 
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
@@ -57,6 +70,20 @@ public class BuildingServiceImpl implements BuildingService {
         if (ids != null && !ids.isEmpty()) {
             buildingRepository.deleteByIdIn(ids);
         }
+    }
+
+    @Override
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+        List<String> typeCode = buildingSearchRequest.getTypeCode();
+        BuildingSearchBuilder buildingSearchBuilder = buildingSearchBuilderConverter.toBuildingSearchBuilder(buildingSearchRequest, typeCode);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder);
+        List<BuildingSearchResponse> res = new ArrayList<>();
+
+        for(BuildingEntity item: buildingEntities) {
+            BuildingSearchResponse building = buildingConverter.toBuildingSearchResponse(item);
+            res.add(building);
+        }
+        return res;
     }
 
 

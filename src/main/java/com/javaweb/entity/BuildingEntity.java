@@ -22,6 +22,9 @@ public class BuildingEntity extends BaseEntity  {
     @Column(name = "ward")
     private String ward;
 
+    @Column(name = "district")
+    private String district;
+
     @Column(name = "structure")
     private String structure;
 
@@ -76,8 +79,8 @@ public class BuildingEntity extends BaseEntity  {
     private Long brokerageFee;
 
 
-    @Column(name = "map")
-    private String map;
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "managername")
     private String managerName;
@@ -85,9 +88,28 @@ public class BuildingEntity extends BaseEntity  {
     @Column(name = "managerphone")
     private String managerPhone;
 
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private List<RentAreaEntity> rentAreaEntites = new ArrayList<>();
 
     @ManyToMany(mappedBy = "buildingEntities")
     private List<UserEntity> userEntities = new ArrayList<UserEntity>();
+
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public List<RentAreaEntity> getRentAreaEntites() {
+        return rentAreaEntites;
+    }
+
+    public void setRentAreaEntites(List<RentAreaEntity> rentAreaEntites) {
+        this.rentAreaEntites = rentAreaEntites;
+    }
 
     public String getElectricityFee() {
         return electricityFee;
@@ -295,13 +317,12 @@ public class BuildingEntity extends BaseEntity  {
         this.numberOfBasement = numberOfBasement;
     }
 
-    public String getMap() {
-        return map;
+
+    public String getType() {
+        return type;
     }
 
-    public void setMap(String map) {
-        this.map = map;
+    public void setType(String type) {
+        this.type = type;
     }
-
-
 }

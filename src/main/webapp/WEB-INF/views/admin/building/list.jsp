@@ -30,7 +30,7 @@
         <!-- /.page-header -->
 
         <div class="row">
-            <div class="col-xs-12" bis_skin_checked="1">
+            <div class="col-xs-12" >
                 <div class="widget-box ui-sortable-handle" bis_skin_checked="1">
                     <div class="widget-header" bis_skin_checked="1">
                         <h5 class="widget-title">Tìm kiếm</h5>
@@ -42,10 +42,9 @@
                         </div>
                     </div>
 
-                    <div class="widget-body" style="font-family: 'Times New Roman', Times, serif" bis_skin_checked="1">
-                        <div class="widget-main" bis_skin_checked="1">
-                            <form:form modelAttribute="modelSearch" id="listForm" action="${buildingListURL}"
-                                       method="GET">
+                    <div class="widget-body" style="font-family: 'Times New Roman', Times, serif" >
+                        <div class="widget-main" >
+                            <form:form modelAttribute="modelSearch" id="listForm" action="${buildingListURL}" method="GET">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-xs-12">
@@ -244,10 +243,10 @@
                             <td>${item.managerName}</td>
                             <td>${item.managerPhone}</td>
                             <td>${item.floorArea}</td>
+                            <td>${item.emptyArea}</td>
                             <td>${item.rentArea}</td>
-                            <td>${item.id}</td>
-                            <td>${item.id}</td>
-                            <td>${item.id}</td>
+                            <td>${item.brokerageFee}</td>
+                            <td>${item.serviceFee}</td>
 
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
@@ -305,7 +304,7 @@
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="Building" value="">
+                <input type="hidden" id="buildingId" name="buildingId" value="">
             </div>
 
             <!-- Modal footer -->
@@ -318,10 +317,10 @@
     </div>
 </div>
 <script>
-    function assignmentBuilding(buildingid) {
+    function assignmentBuilding(buildingId) {
         $("#assignmentBuildingModal").modal("show");
-        loadStaffs(buildingid);
-        $('#buildingId').val();
+        loadStaffs(buildingId);
+        $('#buildingId').val(buildingId);
 
 
     }
@@ -362,8 +361,29 @@
             return $(this).val();
         }).get();
         data['staffs'] = staffs;
+        if(data['staffs'] != ''){
+            assignmentBuildingForStaff(data);
+        }
         console.log("ok");
     })
+
+    function assignmentBuildingForStaff(data) {
+        $.ajax({
+            type: "POST",
+            url: "${buildingAPI}/" + 'assignment',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (response) {
+                console.log("Success");
+            },
+            error: function (response) {
+                console.info("Giao không thành công")
+                window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                console.log(response);
+            }
+        })
+}
 
     $('#btnSearchBuilding').click(function (e) {
         e.preventDefault();

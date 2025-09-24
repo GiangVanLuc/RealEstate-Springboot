@@ -1,6 +1,7 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.repository.BuildingRepository;
@@ -30,7 +31,7 @@ public class  BuildingAPI {
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids) {
         // Xuong Db de xoa building theo danh sach id gui ve
-//        buildingService.deleteBuildingById(ids);
+        buildingService.deleteBuildingById(ids);
 
     }
 
@@ -38,6 +39,11 @@ public class  BuildingAPI {
     public ResponseDTO listStaffs(@PathVariable Long id) {
         ResponseDTO result = buildingService.listStaffs(id);
         return result;
+    }
+
+    @PostMapping("/assignment")
+    public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
+        System.out.println("Ok");
     }
 
 
