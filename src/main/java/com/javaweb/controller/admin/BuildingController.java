@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Pageable;
+
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +37,12 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("/admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
         // xu ly DB
-        List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest);
-
-
-        mav.addObject("buildingList", responseList);
+        List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+        BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
+        int totalItems = buildingService.countTotalItems(buildingSearchRequest);
+        buildingSearchResponse.setListResult(responseList);
+        buildingSearchResponse.setTotalItems(totalItems);
+        mav.addObject("buildingList", buildingSearchResponse);
         mav.addObject("listStaffs", userService.getStaffs());
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());

@@ -14,11 +14,11 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-//    @Transactional // Đảm bảo toàn bộ hoạt động xóa nằm trong một transaction
+    @Transactional // Đảm bảo toàn bộ hoạt động xóa nằm trong một transaction
     public void deleteBuildingById(List<Long> ids) {
         if (ids != null && !ids.isEmpty()) {
             buildingRepository.deleteByIdIn(ids);
@@ -73,10 +73,10 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest, Pageable pageable) {
         List<String> typeCode = buildingSearchRequest.getTypeCode();
         BuildingSearchBuilder buildingSearchBuilder = buildingSearchBuilderConverter.toBuildingSearchBuilder(buildingSearchRequest, typeCode);
-        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder, pageable);
         List<BuildingSearchResponse> res = new ArrayList<>();
 
         for(BuildingEntity item: buildingEntities) {
@@ -84,6 +84,13 @@ public class BuildingServiceImpl implements BuildingService {
             res.add(building);
         }
         return res;
+    }
+
+    @Override
+    public int countTotalItems(BuildingSearchRequest buildingSearchRequest) {
+        return buildingRepository.countTotalItems(
+                buildingSearchBuilderConverter.toBuildingSearchBuilder(buildingSearchRequest, buildingSearchRequest.getTypeCode())
+        );
     }
 
 

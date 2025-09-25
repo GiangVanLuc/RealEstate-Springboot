@@ -94,25 +94,40 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
 
     @Override
-    public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
+    public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder, Pageable pageable) {
         // Sql Native
         StringBuilder sql = new StringBuilder("SELECT b.* FROM building b");
         joinTable(buildingSearchBuilder, sql);
         StringBuilder where = new StringBuilder(" WHERE 1 = 1");
         queryNomal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
-        where.append(" GROUP BY b.id;");
+        where.append(" GROUP BY b.id");
         sql.append(where);
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
+        if (pageable != null) {
+            query.setFirstResult((int) pageable.getOffset()); // Tương đương OFFSET
+            query.setMaxResults(pageable.getPageSize());    // Tương đương LIMIT
+        }
         return query.getResultList();
 
     }
 
     @Override
-    public int countTotalItems(BuildingSearchResponse buildingSearchResponse) {
-        StringBuilder sql = new StringBuilder("SELECT b.* FROM building WHERE id = " + buildingSearchResponse.getId());
-        Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
-        return query.getResultList().size();
+    public int countTotalItems(BuildingSearchBuilder buildingSearchBuilder) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT b.id) FROM building b");
+        joinTable(buildingSearchBuilder, sql);
+        StringBuilder where = new StringBuilder(" WHERE 1=1 ");
+        queryNomal(buildingSearchBuilder, where);
+        querySpecial(buildingSearchBuilder, where);
+        sql.append(where);
 
+        Query query = entityManager.createNativeQuery(sql.toString());
+        Object result = query.getSingleResult();
+        return ((Number) result).intValue();
+    }
+
+
+    public void splitPage(Pageable pageable, StringBuilder where) {
+        where.append(" LIMIT ").append(pageable.getPageSize()).append("\n").append("OFFSET ").append(pageable.getOffset());
     }
 }
