@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchBuilderConverter;
+import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
@@ -43,7 +44,13 @@ public class BuildingServiceImpl implements BuildingService {
         BuildingEntity building = buildingRepository.findById(buildingId)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy tòa nhà với ID: " + buildingId));
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
-        List<UserEntity> staffAssignment = building.getUserEntities();
+        List<AssignmentBuildingEntity> assignmentBuildingEntities = building.getAssignmentBuildingEntities();
+        List<UserEntity> staffAssignment = new ArrayList<>();
+        for(AssignmentBuildingEntity assignmentBuildingEntity : assignmentBuildingEntities){
+            staffAssignment.add(assignmentBuildingEntity.getUserEntity());
+        }
+
+
         List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>();
         ResponseDTO responseDTO = new ResponseDTO();
         for (UserEntity it: staffs) {

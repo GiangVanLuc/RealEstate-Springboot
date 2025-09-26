@@ -281,6 +281,7 @@
                                    export="false"
                                    class="table table-fcv-ace table-striped table-bordred table-hover dataTable no-footer"
                                    style="margin: 3em 0 1.5em;">
+                                   <display:setProperty name="paging.banner.pageNumberParam" value="page"/>
                                 <display:column title = "<fieldset class = 'form-group'>
                                 <input type = 'checkbox' id = 'checkALl' class = 'check-box-element'>
                                 </fieldset>" class = "center select-cell" headerClass="center select-cell">
@@ -295,7 +296,7 @@
                                         <display:column headerClass="text-left" property="name" title="Tên tòa nhà" />
 
                                         <!-- Địa chỉ -->
-                                        <display:column headerClass="text-left" title="Địa chỉ">${tableList.address}</display:column>
+                                        <display:column headerClass="text-left" property="address" title="địa chỉ"/>
 
                                         <!-- Số tầng hầm -->
                                         <display:column  headerClass="text-left" property="numberOfBasement" title="Số tầng hầm" />

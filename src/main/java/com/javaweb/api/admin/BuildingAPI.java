@@ -4,9 +4,12 @@ import com.javaweb.entity.BuildingEntity;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
+import com.javaweb.service.AssignmentBuildingService;
 import com.javaweb.service.BuildingService;
+import com.javaweb.service.RentAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,11 @@ public class  BuildingAPI {
     @Autowired
     private RentAreaRepository rentAreaRepository;
 
+    @Autowired
+    private AssignmentBuildingService assignmentBuildingService;
+    @Autowired
+    private RentAreaService rentAreaService;
+
     @PostMapping
     public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
         // xuong Db cap nhat hoac them
@@ -35,8 +43,8 @@ public class  BuildingAPI {
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids) {
         // Xuong Db de xoa building theo danh sach id gui ve
-
-        rentAreaRepository.deleteByIdIn(ids);
+        rentAreaService.deleteByBuildingId(ids);
+        assignmentBuildingService.deleteAssignmentBuildingEntity(ids);
         buildingService.deleteBuildingById(ids);
 
     }

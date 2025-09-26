@@ -88,12 +88,23 @@ public class BuildingEntity extends BaseEntity  {
     @Column(name = "managerphone")
     private String managerPhone;
 
-    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "buildingId", fetch = FetchType.LAZY)
     private List<RentAreaEntity> rentAreaEntites = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "buildingEntities")
-    private List<UserEntity> userEntities = new ArrayList<UserEntity>();
+    @OneToMany(mappedBy = "buildingId", fetch = FetchType.LAZY)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 
+//    @ManyToMany(mappedBy = "buildingEntities")
+//    private List<UserEntity> userEntities = new ArrayList<UserEntity>();
+
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
 
     public String getDistrict() {
         return district;
@@ -219,13 +230,7 @@ public class BuildingEntity extends BaseEntity  {
         this.managerPhone = managerPhone;
     }
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
-    }
 
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
 
 
 

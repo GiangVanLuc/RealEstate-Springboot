@@ -14,7 +14,7 @@ public class RentAreaEntity extends BaseEntity {
 
     @ManyToOne()
     @JoinColumn(name = "buildingid")
-    private BuildingEntity building;
+    private BuildingEntity buildingId;
 
     public String getValue() {
         return value;
@@ -24,11 +24,11 @@ public class RentAreaEntity extends BaseEntity {
         this.value = value;
     }
 
-    public BuildingEntity getBuilding() {
-        return building;
+    public BuildingEntity getBuildingId() {
+        return buildingId;
     }
 
-    public void setBuilding(BuildingEntity building) {
-        this.building = building;
+    public void setBuildingId(BuildingEntity buildingId) {
+        this.buildingId = buildingId;
     }
 }

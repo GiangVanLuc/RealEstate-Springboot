@@ -4,6 +4,7 @@ import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.RentAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class RentAreaServiceImpl implements RentAreaService {
     private RentAreaRepository rentAreaRepository;
 
     @Override
-    public void deleteByBuildingId(List<Long> ids) {
-        rentAreaRepository.deleteByIdIn(ids);
+    @Transactional
+    public void deleteByBuildingId(List<Long> buildingids) {
+        rentAreaRepository.deleteByBuildingIdIn(buildingids);
     }
 }

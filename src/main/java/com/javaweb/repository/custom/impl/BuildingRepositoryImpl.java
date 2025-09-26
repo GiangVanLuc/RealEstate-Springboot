@@ -102,12 +102,10 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         queryNomal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
         where.append(" GROUP BY b.id");
+        // phan trang
+        splitPage(pageable, where);
         sql.append(where);
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
-        if (pageable != null) {
-            query.setFirstResult((int) pageable.getOffset()); // Tương đương OFFSET
-            query.setMaxResults(pageable.getPageSize());    // Tương đương LIMIT
-        }
         return query.getResultList();
 
     }
@@ -127,7 +125,11 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     }
 
 
-    public void splitPage(Pageable pageable, StringBuilder where) {
-        where.append(" LIMIT ").append(pageable.getPageSize()).append("\n").append("OFFSET ").append(pageable.getOffset());
+    private void splitPage(Pageable pageable, StringBuilder sql) {
+        int pageNumber = pageable.getPageNumber(); // 0-based
+        int pageSize = pageable.getPageSize();
+        int offset = pageNumber * pageSize;
+        sql.append(" LIMIT ").append(offset).append(", ").append(pageSize);
     }
+
 }

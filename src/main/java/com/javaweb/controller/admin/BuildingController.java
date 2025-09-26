@@ -37,6 +37,23 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("/admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
         // xu ly DB
+        //fix loi khong phan trang
+        String pageParam = null;
+        for (Object paramNameObject : request.getParameterMap().keySet()) {
+            String paramName = (String) paramNameObject;
+            if (paramName.endsWith("-p")) {
+                pageParam = request.getParameter(paramName);
+                break;
+            }
+        }
+
+        if (pageParam != null) {
+            buildingSearchRequest.setPage(Integer.parseInt(pageParam));
+        } else {
+            buildingSearchRequest.setPage(1);
+        }
+
+        System.out.println(buildingSearchRequest.getPage());
         List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
         int totalItems = buildingService.countTotalItems(buildingSearchRequest);
