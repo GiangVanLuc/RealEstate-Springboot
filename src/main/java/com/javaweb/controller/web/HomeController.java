@@ -1,7 +1,6 @@
 package com.javaweb.controller.web;
 
 import com.javaweb.model.request.BuildingSearchRequest;
-import com.javaweb.utils.DistrictCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;

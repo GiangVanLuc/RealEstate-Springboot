@@ -53,7 +53,6 @@ public class BuildingController {
             buildingSearchRequest.setPage(1);
         }
 
-        System.out.println(buildingSearchRequest.getPage());
         List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
         int totalItems = buildingService.countTotalItems(buildingSearchRequest);

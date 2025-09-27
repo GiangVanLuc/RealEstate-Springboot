@@ -52,7 +52,8 @@ public class BuildingEntity extends BaseEntity  {
     @Column(name = "carfee")
     private String carFee;
 
-
+    @Column(name = "motofee")
+    private String motoFee;
 
     @Column(name = "overtimefee")
     private String overtimeFee;
@@ -78,9 +79,11 @@ public class BuildingEntity extends BaseEntity  {
     @Column(name = "brokeragefee")
     private Long brokerageFee;
 
-
     @Column(name = "type")
     private String type;
+
+    @Column(name = "note")
+    private String note;
 
     @Column(name = "managername")
     private String managerName;
@@ -104,6 +107,23 @@ public class BuildingEntity extends BaseEntity  {
 
     public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
+
+    public String getMotoFee() {
+        return motoFee;
+    }
+
+    public void setMotoFee(String motoFee) {
+        this.motoFee = motoFee;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getDistrict() {

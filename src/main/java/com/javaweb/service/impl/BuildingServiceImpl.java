@@ -14,13 +14,20 @@ import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
+import com.javaweb.service.RentAreaService;
+import com.javaweb.utils.NumberUtils;
+import com.javaweb.utils.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -37,6 +44,11 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private BuildingConverter buildingConverter;
+
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private RentAreaService rentAreaService;
 
 
     @Override
@@ -99,6 +111,57 @@ public class BuildingServiceImpl implements BuildingService {
                 buildingSearchBuilderConverter.toBuildingSearchBuilder(buildingSearchRequest, buildingSearchRequest.getTypeCode())
         );
     }
+
+
+    public static boolean checkAddBuilding(BuildingDTO buildingDTO) {
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+//        if(!StringUtils.check(buildingDTO.getName())) return false;
+
+//        if(!NumberUtils.isLong(buildingDTO.getNumberOfBasement())) return false;
+//        if(!NumberUtils.isLong(buildingDTO.getFloorArea())) return false;
+//          if(!NumberUtils.isLong(buildingDTO.getRentPrice())) return false;
+        return true;
+    }
+
+    @Override
+    public BuildingDTO addOrUpdateBuilding(BuildingDTO buildingDTO) {
+        if(!checkAddBuilding(buildingDTO)){
+            return null;
+        }
+        Long buildingId = buildingDTO.getId();
+        BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
+        buildingEntity.setType(String.join(",", buildingDTO.getTypeCode()));
+//        if(buildingId != null) {
+//            BuildingEntity foundBuilding = buildingRepository.findById(buildingId).orElseThrow(() -> new NotFoundException("Building not found!"));
+//            buildingEntity.setImage(foundBuilding.getImage());
+//        }
+//        saveThumbnail(buildingDTO, buildingEntity);
+        buildingRepository.save(buildingEntity);
+        if(StringUtils.check(buildingDTO.getRentArea())) rentAreaService.addRentArea(buildingDTO);
+        return buildingDTO;
+    }
+
+//    private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
+//        String path = "/building/" + buildingDTO.getImageName();
+//
+//        if (null != buildingDTO.getImageBase64()) {
+//            if (null != buildingEntity.getImage()) {
+//                if (!path.equals(buildingEntity.getImage())) {
+//                    File file = new File("C://home/office" + buildingEntity.getImage());
+//                    file.delete();
+//                }
+//            }
+//            byte[] bytes = Base64.getDecoder().decode(buildingDTO.getImageBase64());
+//            // Giả định có một lớp tiện ích để ghi tệp
+//            uploadFileUtils.writeOrUpdate(path, bytes);
+//            buildingEntity.setImage(path);
+//        }
+//
+//    }
 
 
 }

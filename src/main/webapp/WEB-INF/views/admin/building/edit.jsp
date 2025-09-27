@@ -46,10 +46,9 @@
             </div>
 
             <!-- Bảng danh sách -->
-            <form:form modelAttribute="buildingEdit" id="listForm" method="GET">
+            <form:form modelAttribute="buildingEdit" id="listForm" method="POST">
                 <div class="row" >
                     <div class="col-xs-12" >
-                        <form class="form-horizontal" role="form" >
                             <div class="form-group">
                                 <label class="col-xs-3" >Tên tòa nhà</label>
                                 <div class="col-xs-9">
@@ -209,10 +208,14 @@
                                 <label class="col-xs-3 no-padding-right">Hình đại diện</label>
                                 <input class = "col-xs-3 no-padding-right" type = "file" id = "uploadImage">
                                 <div class="col-xs-9">
-                                    <input type="file" id="hinhAnhInput" accept="image/*">
-
-                                    <img id="hinhAnhPreview" src="#" alt="Ảnh xem trước" class="img-thumbnail"
+                                    <c:if test = "${not empty buildingEdit.image}">
+                                    <c:set var = "imagePath"  value = "/repository${buildingEdit.image}"/>
+                                    <img src="#" id = "viewImage" width = "300px" height = "300px" alt="Ảnh xem trước" class="img-thumbnail"
                                          style="display: none;"/>
+                                    </c:if>
+                                    <c:if test ="${empty buildingEdit.image}">
+                                    <img src = "admin/image/default.png" id = "viewImage" width = "300px" height = "300px">
+                                </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -229,8 +232,6 @@
                                 </div>
                             </div>
                             <form:hidden path="id" id="buildingId"/>
-
-                        </form>
                     </div><!-- /.span -->
                 </div>
                 <!-- /.row -->
