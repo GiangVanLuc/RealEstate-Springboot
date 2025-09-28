@@ -334,7 +334,7 @@
                 var row = '';
                 $.each(response.data, function (index, item) {
                     row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value="' + item.staffId + '" id="checkbox_' + item.staffId + '" class="check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + ' class = "check-box-element" ' + item.checked + '/></td>';
                     row += '<td class="text-center">' + item.fullName + '</td>';
                     row += '</tr>';
                 });
@@ -370,13 +370,13 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",
-            success: function (respond) {
+            success: function (response) {
                 console.log("Success");
             },
-            error: function (respond) {
+            error: function (response) {
                 console.info("Giao không thành công")
                 window.location.href = "<c:url value = "/admin/building-list?message=error" />";
-                console.log(respond);
+                console.log(response);
             }
         })
 }
