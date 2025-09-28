@@ -356,8 +356,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <table style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover"
-                       id="staffList">
+                <table style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover" id="staffList">
                     <thead>
                     <tr>
                         <th>Chọn</th>
@@ -369,7 +368,7 @@
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="buildingId" value="">
+                <input type="hidden" id="buildingId" name="buildingId" value="1">
             </div>
 
             <!-- Modal footer -->
@@ -383,7 +382,7 @@
 </div>
 <script>
     function assignmentBuilding(buildingId) {
-        $("#assignmentBuildingModal").modal("show");
+        $("#assignmentBuildingModal").modal();
         loadStaffs(buildingId);
         $('#buildingId').val(buildingId);
 
@@ -401,21 +400,23 @@
                 var row = '';
                 $.each(response.data, function (index, item) {
                     row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffid + ' class = "check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center">'
+                         + '<input type="checkbox" value="' + item.staffId + '"'
+                         + ' id="checkbox_' + item.staffId + '"'
+                         + ' class="check-box-element" ' + item.checked + '>'
+                         + '</td>';
                     row += '<td class="text-center">' + item.fullName + '</td>';
                     row += '</tr>';
-
-
                 });
                 $('#staffList tbody').empty().html(row);
-                console.log("Success");
+                console.info("Success");
             },
             error: function (response) {
                 console.log("Fail");
-                 window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                 window.location.href = "<c:url value = "/admin/building-list?message=error"/>";
                 console.log(response);
             }
-        })
+        });
 }
 
     $('#btnassignmentBuilding').click(function (e) {
