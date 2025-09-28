@@ -365,7 +365,7 @@
 
     function assignmentBuildingForStaff(data) {
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "${buildingAPI}/" + 'assignment',
             data: JSON.stringify(data),
             contentType: "application/json",
