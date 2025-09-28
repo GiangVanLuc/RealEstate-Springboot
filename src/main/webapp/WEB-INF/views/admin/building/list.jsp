@@ -334,10 +334,9 @@
                 var row = '';
                 $.each(response.data, function (index, item) {
                     row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value="' + item.staffId + '" id="checkbox_' + item.staffId + '" class="check-box-element" ' + item.checked + '/></td>';                    row += '<td class="text-center">' + item.fullName + '</td>';
+                    row += '<td class="text-center"><input type="checkbox" value="' + item.staffId + '" id="checkbox_' + item.staffId + '" class="check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center">' + item.fullName + '</td>';
                     row += '</tr>';
-
-
                 });
                 $('#staffList tbody').html(row);
                 console.log("Success");
