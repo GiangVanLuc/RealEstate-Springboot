@@ -57,11 +57,8 @@ public class  BuildingAPI {
     }
 
     @PutMapping("/assignment")
-    public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
+    public ResponseEntity<Void> updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
         assignmentBuildingService.addAssignmentBuildingEntity(assignmentBuildingDTO);
+        return ResponseEntity.ok().build();
     }
-
-
-
-
 }

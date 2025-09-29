@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,14 +37,15 @@ public class AssignmentBuildingServiceImpl implements AssignmentBuildingService 
         assignmentBuildingRepository.deleteByBuildingId(buildingEntity);
 
         List<Long> staffIds =assignmentBuildingDTO.getStaffs();
+        List<AssignmentBuildingEntity> newAssignmentBuildingEntity = new ArrayList<>();
         for(Long it: staffIds){
             AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
             assignmentBuildingEntity.setBuildingId(buildingEntity);
 
             UserEntity userEntity = userRepository.findById(it).get();
             assignmentBuildingEntity.setUserEntity(userEntity);
-
-            assignmentBuildingRepository.save(assignmentBuildingEntity);
+            newAssignmentBuildingEntity.add(assignmentBuildingEntity);
         }
+        assignmentBuildingRepository.saveAll(newAssignmentBuildingEntity);
     }
 }

@@ -271,11 +271,11 @@
             contentType: "application/json",
             dataType: "JSON",
             success: function (respond) {
-                window.location.href = "<c:url value = "/admin/building-list?message=success" />";
+                window.location.href = '<c:url value = "/admin/building-list?message=success" />';
             },
             error: function (respond) {
 
-                window.location.href = "<c:url value = "/admin/building-edit?message=error" />";
+                window.location.href = '<c:url value = "/admin/building-edit?message=error" />';
             }
         })
 }

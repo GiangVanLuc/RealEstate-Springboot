@@ -203,6 +203,11 @@
         <!-- Bảng danh sách -->
         <div class="row">
             <div class="col-xs-12">
+                <table id = tableList style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover">
+                    <thead>
+</thead>
+<tbody
+
                         <form:form modelAttribute="buildingList" >
                             <display:table name="buildingList.listResult"
                                    cellspacing="0" cellpadding="0"
@@ -215,7 +220,6 @@
                                    export="false"
                                    class="table table-fcv-ace table-striped table-bordred table-hover dataTable no-footer"
                                    style="margin: 3em 0 1.5em;">
-                                   <display:setProperty name="paging.banner.pageNumberParam" value="page"/>
                                 <display:column title = "<fieldset class = 'form-group'>
                                 <input type = 'checkbox' id = 'checkALl' class = 'check-box-element'>
                                 </fieldset>" class = "center select-cell" headerClass="center select-cell">
@@ -249,9 +253,9 @@
 
                                         <!-- Thao tác -->
                                         <display:column headerClass="col-action" title="Thao tác" escapeXml="false">
-                                            <button class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
+                                            <a class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
                                                 <i class="ace-icon fa fa-list"></i>
-                                            </button>
+                                            </a>
 
                                             <a class="btn btn-xs btn-info"
                                                href="/admin/building-edit-${tableList.id}"
@@ -259,19 +263,19 @@
                                                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                                             </a>
 
-                                            <button type="button"
+                                            <a type="button"
                                                     class="btn btn-xs btn-danger"
                                                     title="Xóa tòa nhà"
                                                     onclick="deleteBuilding(${tableList.id})">
                                                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                            </button>
+                                            </a>
                                         </display:column>
 
                                     </display:table>
                         </form:form>
+                        </tbody>
+                    </table>
 
-                    </tbody>
-                </table>
             </div><!-- /.span -->
         </div>
     </div>
@@ -334,7 +338,7 @@
                 var row = '';
                 $.each(response.data, function (index, item) {
                     row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + ' class = "check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center"><input type="checkbox" value="' + item.staffId + '" id="checkbox_' + item.staffId + '" class = "check-box-element" ' + item.checked + '/></td>';
                     row += '<td class="text-center">' + item.fullName + '</td>';
                     row += '</tr>';
                 });
@@ -343,7 +347,7 @@
             },
             error: function (response) {
                 console.log("Fail");
-                 window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                 window.location.href = window.location.href = '<c:url value="/admin/building-list?message=error"/>';
                 console.log(response);
             }
         })
@@ -369,13 +373,14 @@
             url: "${buildingAPI}/" + 'assignment',
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
+            // dataType: "JSON",
             success: function (response) {
                 console.log("Success");
+                window.location.href = '<c:url value = "/admin/building-list?message=success" />';
             },
             error: function (response) {
                 console.info("Giao không thành công")
-                window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                window.location.href = '<c:url value = "/admin/building-list?message=error" />';
                 console.log(response);
             }
         })
