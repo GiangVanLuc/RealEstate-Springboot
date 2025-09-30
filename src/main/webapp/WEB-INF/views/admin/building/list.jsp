@@ -335,8 +335,6 @@
                                     </display:table>
                         </form:form>
 
-                    </tbody>
-                </table>
             </div><!-- /.span -->
         </div>
     </div>
@@ -399,21 +397,14 @@
             success: function (response) {
                 var row = '';
                 $.each(response.data, function (index, item) {
-                    row += '<tr>';
-                    row += '<td class="text-center">'
-                         + '<input type="checkbox" value="' + item.staffId + '"'
-                         + ' id="checkbox_' + item.staffId + '"'
-                         + ' class="check-box-element" ' + item.checked + '>'
-                         + '</td>';
-                    row += '<td class="text-center">' + item.fullName + '</td>';
-                    row += '</tr>';
+
                 });
                 $('#staffList tbody').empty().html(row);
                 console.info("Success");
             },
             error: function (response) {
                 console.log("Fail");
-                 window.location.href = "<c:url value = "/admin/building-list?message=error"/>";
+                 window.location.href = '<c:url value = "/admin/building-list?message=error"/>';
                 console.log(response);
             }
         });
@@ -439,9 +430,10 @@
             url: "${buildingAPI}/" + 'assignment',
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
+            // dataType: "JSON",
             success: function (response) {
                 console.log("Success");
+                window.location.href = '<c:url value = "/admin/building-list?message=success" />';
             },
             error: function (response) {
                 console.info("Giao không thành công")

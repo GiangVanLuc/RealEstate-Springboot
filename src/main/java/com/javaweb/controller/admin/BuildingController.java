@@ -36,6 +36,10 @@ public class BuildingController {
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
+
+        // fix loi
+
+
         // xu ly DB
         List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();

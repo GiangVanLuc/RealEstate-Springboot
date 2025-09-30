@@ -102,12 +102,12 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         queryNomal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
         where.append(" GROUP BY b.id");
+
+        // phan trang
+        splitPage(pageable, where);
+
         sql.append(where);
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
-        if (pageable != null) {
-            query.setFirstResult((int) pageable.getOffset()); // Tương đương OFFSET
-            query.setMaxResults(pageable.getPageSize());    // Tương đương LIMIT
-        }
         return query.getResultList();
 
     }
