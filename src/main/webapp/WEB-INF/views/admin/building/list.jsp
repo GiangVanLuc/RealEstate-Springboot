@@ -203,72 +203,11 @@
         <!-- Bảng danh sách -->
         <div class="row">
             <div class="col-xs-12">
-<%--                <table id="tableList" style="margin: 3em 0 1.5em"--%>
-<%--                       class="table table-striped table-bordered table-hover">--%>
-<%--                    <thead>--%>
-<%--                    <tr>--%>
-<%--                        <th class="center">--%>
-<%--                            <label class="pos-rel">--%>
-<%--                                <input type="checkbox" class="ace">--%>
-<%--                                <span class="lbl"></span>--%>
-<%--                            </label>--%>
-<%--                        </th>--%>
-<%--                        <th>Tên tòa nhà</th>--%>
-<%--                        <th>Địa chỉ</th>--%>
-<%--                        <th>Số tầng hầm</th>--%>
-<%--                        <th>Tên quản lý</th>--%>
-<%--                        <th>Số điện thoại quản lý</th>--%>
-<%--                        <th>D.tích sàn</th>--%>
-<%--                        <th>D.tích trống</th>--%>
-<%--                        <th>D.tích thuê</th>--%>
-<%--                        <th>Phí mua giới</th>--%>
-<%--                        <th>Phí dịch vụ</th>--%>
-<%--                        <th>Thao tác</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
+                <table id = "buildingTable" style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover">
+                    <thead>
+</thead>
+<tbody
 
-<%--                    <tbody>--%>
-<%--                    <c:forEach var="item" items="${buildingList}">--%>
-<%--                        <tr>--%>
-<%--                            <td class="center">--%>
-<%--                                <label class="pos-rel">--%>
-<%--                                    <input type="checkbox" name="checkList" value="${item.id}" class="ace">--%>
-<%--                                    <span class="lbl"></span>--%>
-<%--                                </label>--%>
-<%--                            </td>--%>
-
-<%--                            <td>${item.name}</td>--%>
-<%--                            <td>${item.address}</td>--%>
-<%--                            <td>${item.numberOfBasement}</td>--%>
-<%--                            <td>${item.managerName}</td>--%>
-<%--                            <td>${item.managerPhone}</td>--%>
-<%--                            <td>${item.floorArea}</td>--%>
-<%--                            <td>${item.emptyArea}</td>--%>
-<%--                            <td>${item.rentArea}</td>--%>
-<%--                            <td>${item.brokerageFee}</td>--%>
-<%--                            <td>${item.serviceFee}</td>--%>
-
-<%--                            <td>--%>
-<%--                                <div class="hidden-sm hidden-xs btn-group">--%>
-
-<%--                                    <button class="btn btn-xs btn-success" title="Giao tòa nhà"--%>
-<%--                                            onclick="assignmentBuilding(${item.id})">--%>
-<%--                                        <i class="ace-icon fa fa-list"></i>--%>
-<%--                                    </button>--%>
-
-
-<%--                                    <a class="btn btn-xs btn-info" href="/admin/building-edit-${item.id}"--%>
-<%--                                       title="Sửa tòa nhà">--%>
-<%--                                        <i class="ace-icon fa fa-pencil bigger-120"></i>--%>
-<%--                                    </a>--%>
-
-<%--                                    <button href="#" class="btn btn-xs btn-danger"  title="Xóa tòa nhà" onclick = "deleteBuilding(${item.id})">--%>
-<%--                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>--%>
-<%--                                    </button>--%>
-<%--                                </div>--%>
-<%--                            </td>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
                         <form:form modelAttribute="buildingList" >
                             <display:table name="buildingList.listResult"
                                    cellspacing="0" cellpadding="0"
@@ -295,7 +234,7 @@
                                         <display:column headerClass="text-left" property="name" title="Tên tòa nhà" />
 
                                         <!-- Địa chỉ -->
-                                        <display:column headerClass="text-left" title="Địa chỉ">${tableList.address}</display:column>
+                                        <display:column headerClass="text-left" property="address" title="địa chỉ"/>
 
                                         <!-- Số tầng hầm -->
                                         <display:column  headerClass="text-left" property="numberOfBasement" title="Số tầng hầm" />
@@ -314,9 +253,9 @@
 
                                         <!-- Thao tác -->
                                         <display:column headerClass="col-action" title="Thao tác" escapeXml="false">
-                                            <button class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
+                                            <a class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
                                                 <i class="ace-icon fa fa-list"></i>
-                                            </button>
+                                            </a>
 
                                             <a class="btn btn-xs btn-info"
                                                href="/admin/building-edit-${tableList.id}"
@@ -324,16 +263,18 @@
                                                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                                             </a>
 
-                                            <button type="button"
+                                            <a type="button"
                                                     class="btn btn-xs btn-danger"
                                                     title="Xóa tòa nhà"
                                                     onclick="deleteBuilding(${tableList.id})">
                                                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                            </button>
+                                            </a>
                                         </display:column>
 
                                     </display:table>
                         </form:form>
+                        </tbody>
+                    </table>
 
             </div><!-- /.span -->
         </div>
@@ -354,7 +295,8 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <table style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover" id="staffList">
+                <table style="margin: 3em 0 1.5em" class="table table-striped table-bordered table-hover"
+                       id="staffList">
                     <thead>
                     <tr>
                         <th>Chọn</th>
@@ -366,7 +308,7 @@
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="buildingId" value="1">
+                <input type="hidden" id="buildingId" name="buildingId" value="">
             </div>
 
             <!-- Modal footer -->
@@ -380,7 +322,7 @@
 </div>
 <script>
     function assignmentBuilding(buildingId) {
-        $("#assignmentBuildingModal").modal();
+        $("#assignmentBuildingModal").modal("show");
         loadStaffs(buildingId);
         $('#buildingId').val(buildingId);
 
@@ -391,23 +333,24 @@
          $.ajax({
             type: "GET",
             url: "${buildingAPI}/" + buildingId + '/staffs',
-            // data: JSON.stringify(data),
-            // contentType: "application/json",
             dataType: "JSON",
             success: function (response) {
                 var row = '';
                 $.each(response.data, function (index, item) {
-
+                    row += '<tr>';
+                    row += '<td class="text-center"><input type="checkbox" value="' + item.staffId + '" id="checkbox_' + item.staffId + '" class = "check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center">' + item.fullName + '</td>';
+                    row += '</tr>';
                 });
-                $('#staffList tbody').empty().html(row);
-                console.info("Success");
+                $('#staffList tbody').html(row);
+                console.log("Success");
             },
             error: function (response) {
                 console.log("Fail");
-                 window.location.href = '<c:url value = "/admin/building-list?message=error"/>';
+                 window.location.href = window.location.href = '<c:url value="/admin/building-list?message=error"/>';
                 console.log(response);
             }
-        });
+        })
 }
 
     $('#btnassignmentBuilding').click(function (e) {
@@ -426,7 +369,7 @@
 
     function assignmentBuildingForStaff(data) {
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "${buildingAPI}/" + 'assignment',
             data: JSON.stringify(data),
             contentType: "application/json",
@@ -437,7 +380,7 @@
             },
             error: function (response) {
                 console.info("Giao không thành công")
-                window.location.href = "<c:url value = "/admin/building-list?message=error" />";
+                window.location.href = '<c:url value = "/admin/building-list?message=error" />';
                 console.log(response);
             }
         })
@@ -458,6 +401,10 @@
         var buildingIds = $('#tableList').find('tbody input[type="checkbox"]:checked').map(function () {
             return $(this).val();
         }).get();
+        if (buildingIds.length === 0) {
+            alert("Vui lòng chọn ít nhất một tòa nhà để xóa!");
+            return;
+        }
         deleteBuildings(buildingIds);
 
     })
@@ -468,16 +415,23 @@
             url: "${buildingAPI}/" + data,
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
+            // dataType: "JSON",
             success: function (response) {
                 console.log("Success");
+                window.location.href = '<c:url value = "/admin/building-list?message=success" />';
             },
             error: function (response) {
                 console.log("Fail");
+                window.location.href = '<c:url value = "/admin/building-list?message=error" />';
                 console.log(response);
             }
         })
     }
+
+    $('#checkALl').on('change', function () {
+        $('input[name="checkList"]').prop('checked', this.checked);
+    });
+
 
 
 </script>

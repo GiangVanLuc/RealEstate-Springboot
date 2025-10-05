@@ -8,6 +8,7 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,18 +27,19 @@ public class  BuildingAPI {
     @Autowired
     private RentAreaRepository rentAreaRepository;
 
+
+
     @PostMapping
-    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
+    public ResponseEntity<BuildingDTO> addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
         // xuong Db cap nhat hoac them
-        return buildingDTO;
+        return ResponseEntity.ok(buildingService.addOrUpdateBuilding(buildingDTO));
+
     }
 
     @DeleteMapping("/{ids}")
-    public void deleteBuilding(@PathVariable List<Long> ids) {
-        // Xuong Db de xoa building theo danh sach id gui ve
-
-        rentAreaRepository.deleteByIdIn(ids);
+    public ResponseEntity<Void> deleteBuilding(@PathVariable List<Long> ids) {
         buildingService.deleteBuildingById(ids);
+        return ResponseEntity.ok().build();
 
     }
 
@@ -47,9 +49,10 @@ public class  BuildingAPI {
         return result;
     }
 
-    @PostMapping("/assignment")
-    public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
-        System.out.println("Ok");
+    @PutMapping("/assignment")
+    public ResponseEntity<Void> updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
+        buildingService.assignBuildingEntity(assignmentBuildingDTO);
+        return ResponseEntity.ok().build();
     }
 
 

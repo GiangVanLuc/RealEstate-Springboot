@@ -37,10 +37,22 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("/admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
 
-        // fix loi
+        //fix loi khong phan trang
+        String pageParam = null;
+        for (Object paramNameObject : request.getParameterMap().keySet()) {
+            String paramName = (String) paramNameObject;
+            if (paramName.endsWith("-p")) {
+                pageParam = request.getParameter(paramName);
+                break;
+            }
+        }
 
+        if (pageParam != null) {
+            buildingSearchRequest.setPage(Integer.parseInt(pageParam));
+        } else {
+            buildingSearchRequest.setPage(1);
+        }
 
-        // xu ly DB
         List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
         int totalItems = buildingService.countTotalItems(buildingSearchRequest);
@@ -66,9 +78,7 @@ public class BuildingController {
     public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/admin/building/edit");
         // Xuong DB di tim building theo id
-        BuildingDTO buildingDTO = new BuildingDTO();
-        buildingDTO.setId(id);
-        buildingDTO.setName("ACM Building");
+        BuildingDTO buildingDTO = buildingService.findBuildingById(id);
         mav.addObject("buildingEdit", buildingDTO);
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());

@@ -34,12 +34,14 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-
-    @ManyToMany
-    @JoinTable(name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "staffid"),
-            inverseJoinColumns = @JoinColumn(name = "buildingid"))
+    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildingEntities = new ArrayList<>();
+
+//    @ManyToMany
+//    @JoinTable(name = "assignmentbuilding",
+//            joinColumns = @JoinColumn(name = "staffid"),
+//            inverseJoinColumns = @JoinColumn(name = "buildingid"))
+//    private List<BuildingEntity> buildingEntities = new ArrayList<>();
 
     public List<BuildingEntity> getBuildingEntities() {
         return buildingEntities;

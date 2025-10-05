@@ -10,25 +10,25 @@ import javax.persistence.*;
 public class RentAreaEntity extends BaseEntity {
 
     @Column(name = "value")
-    private String value;
+    private Long value;
 
     @ManyToOne()
     @JoinColumn(name = "buildingid")
-    private BuildingEntity building;
+    private BuildingEntity buildingId;
 
-    public String getValue() {
+    public Long getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Long value) {
         this.value = value;
     }
 
-    public BuildingEntity getBuilding() {
-        return building;
+    public BuildingEntity getBuildingId() {
+        return buildingId;
     }
 
-    public void setBuilding(BuildingEntity building) {
-        this.building = building;
+    public void setBuildingId(BuildingEntity buildingId) {
+        this.buildingId = buildingId;
     }
 }
