@@ -21,11 +21,7 @@ public class  BuildingAPI {
     @Autowired
     private BuildingService buildingService;
 
-    @Autowired
-    private BuildingRepository buildingRepository;
 
-    @Autowired
-    private RentAreaRepository rentAreaRepository;
 
 
 

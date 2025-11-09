@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net"%>
 <c:url var="buildingListURL" value="/admin/building-list"/>
 <c:url var="buildingAPI" value="/api/building"/>
 <html>
@@ -139,13 +140,17 @@
                                                 <form:input class="form-control" path="managerPhone" type="text"/>
                                             </div>
                                             <div class="col-xs-2">
-                                                <label class="name">
-                                                    Chọn nhân viên phụ trách
-                                                </label>
-                                                <form:select class="form-control" path="staffId">
-                                                    <form:option value="">---Chọn Nhân Viên---</form:option>
-                                                    <form:options items="${listStaffs}"/>
-                                                </form:select>
+                                                <security:authorize access="hasRole('MANAGER')">
+                                                    <div>
+                                                        <label class="name">
+                                                        Chọn nhân viên phụ trách
+                                                    </label>
+                                                    <form:select class="form-control" path="staffId">
+                                                        <form:option value="">---Chọn Nhân Viên---</form:option>
+                                                        <form:options items="${listStaffs}"/>
+                                                    </form:select>
+                                                    </div>
+                                                </security:authorize>
                                             </div>
                                         </div>
                                     </div>
@@ -253,9 +258,13 @@
 
                                         <!-- Thao tác -->
                                         <display:column headerClass="col-action" title="Thao tác" escapeXml="false">
-                                            <a class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
-                                                <i class="ace-icon fa fa-list"></i>
-                                            </a>
+
+
+                                            <security:authorize access="hasRole('MANAGER')">
+                                                <a class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${tableList.id})">
+                                                    <i class="ace-icon fa fa-list"></i>
+                                                </a>
+                                            </security:authorize>
 
                                             <a class="btn btn-xs btn-info"
                                                href="/admin/building-edit-${tableList.id}"
@@ -263,12 +272,14 @@
                                                 <i class="ace-icon fa fa-pencil bigger-120"></i>
                                             </a>
 
+                                            <security:authorize access="hasRole('MANAGER')">
                                             <a type="button"
                                                     class="btn btn-xs btn-danger"
                                                     title="Xóa tòa nhà"
                                                     onclick="deleteBuilding(${tableList.id})">
                                                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                             </a>
+                                        </security:authorize>
                                         </display:column>
 
                                     </display:table>

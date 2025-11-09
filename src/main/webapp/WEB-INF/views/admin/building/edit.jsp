@@ -259,6 +259,7 @@
         }
         else{
             window.location.href = '<c:url value = "/admin/building-edit?typeCode=require" />';
+            alert("Vui lòng chọn loại tòa nhà!");
         }
     });
 

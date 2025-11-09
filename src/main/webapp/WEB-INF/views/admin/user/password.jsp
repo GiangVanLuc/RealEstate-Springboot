@@ -101,6 +101,7 @@
                         required: "Không bỏ trống",
                         minlength: "Mật khẩu tối thiểu 6 kí tự"
                     },
+
                     confirmPassword: "Không bỏ trống"
                 },
                 submitHandler: function(form) {

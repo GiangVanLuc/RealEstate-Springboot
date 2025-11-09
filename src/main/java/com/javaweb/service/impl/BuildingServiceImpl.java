@@ -74,6 +74,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     }
 
+
     @Override
 
     public void deleteBuildingById(List<Long> ids) {

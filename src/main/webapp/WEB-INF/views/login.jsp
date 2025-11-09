@@ -37,7 +37,7 @@
 											<div class="mb-md-5 mt-md-4 pb-5 text-center">
 												<h2 class="fw-bold mb-2 text-uppercase">Login</h2>
 												<p class="text-white-50 mb-5">Please enter your login and password!</p>
-												<form action="j_spring_security_check" id="formLogin" method="post">
+												<form action="/j_spring_security_check" id="formLogin" method="post">
 												<div class="form-outline form-white mb-4">
 													<label class="form-label" for="userName">Email</label>
 													<input type="text" class="form-control" id="userName" name="j_username" placeholder="Tên đăng nhập">

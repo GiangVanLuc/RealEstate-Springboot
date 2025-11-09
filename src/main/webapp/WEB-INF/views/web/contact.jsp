@@ -116,20 +116,18 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <h2 class="title-lienhe"><strong>Liên hệ với chúng tôi</strong></h2>
-                    <form>
+                    <form id="contactForm">
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Họ và tên">
+                                <input id="fullName" type="text" class="form-control" placeholder="Họ và tên" required>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Email">
+                                <input id="email" type="text" class="form-control" placeholder="Email">
                             </div>
                         </div>
-                        <input type="text" class="form-control mt-3" placeholder="Số điện thoại">
-                        <input type="text" class="form-control mt-3" placeholder="Nội dung">
-                        <button class="btn btn-primary px-4 mt-3">
-                            Gửi liên hệ
-                        </button>
+                        <input id="phone" type="text" class="form-control mt-3" placeholder="Số điện thoại" required>
+                        <input id="demand" type="text" class="form-control mt-3" placeholder="Nhu Cầu" >
+                        <button type="submit" class="btn btn-primary px-4 mt-3">Gửi liên hệ</button>
                     </form>
                 </div>
             </div>
@@ -158,7 +156,7 @@
                             </div>
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798 alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798" alt="">
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Hotline</p>
@@ -235,5 +233,38 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<!-- Thêm thư viện jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#contactForm").on("submit", function(e) {
+            e.preventDefault(); // ngăn reload trang
+
+            // Lấy dữ liệu từ form
+            var data = {
+                fullName: $("#fullName").val(),
+                email: $("#email").val(),
+                customerPhone: $("#phone").val(),
+                demand: $("#demand").val()
+            };
+
+            // Gửi Ajax POST đến API
+            $.ajax({
+                url: "/api/lien-he",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(response) {
+                    alert("✅ Gửi liên hệ thành công!");
+                    $("#contactForm")[0].reset(); // reset form
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert("❌ Có lỗi xảy ra. Vui lòng thử lại!");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

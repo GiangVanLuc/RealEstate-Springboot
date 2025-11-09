@@ -1,13 +1,16 @@
 package com.javaweb.controller.admin;
 
 
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.District;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
+import com.javaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -36,6 +39,9 @@ public class BuildingController {
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("/admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
+        mav.addObject("listStaffs", userService.getStaffs());
+        mav.addObject("districts", District.type());
+        mav.addObject("typeCodes", TypeCode.type());
 
         //fix loi khong phan trang
         String pageParam = null;
@@ -52,17 +58,29 @@ public class BuildingController {
         } else {
             buildingSearchRequest.setPage(1);
         }
+        if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+            buildingSearchRequest.setStaffId(SecurityUtils.getPrincipal().getId());
+        }
 
-        List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
-        BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
+        Pageable pageable = PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems());
+        List<BuildingSearchResponse> results = buildingService.findAll(buildingSearchRequest, pageable);
         int totalItems = buildingService.countTotalItems(buildingSearchRequest);
-        buildingSearchResponse.setListResult(responseList);
-        buildingSearchResponse.setTotalItems(totalItems);
-        mav.addObject("buildingList", buildingSearchResponse);
-        mav.addObject("listStaffs", userService.getStaffs());
-        mav.addObject("districts", District.type());
-        mav.addObject("typeCodes", TypeCode.type());
+
+        BuildingSearchResponse model = new BuildingSearchResponse();
+        model.setListResult(results);
+        model.setTotalItems(totalItems);
+
+        mav.addObject("buildingList", model);
         return mav;
+
+//        List<BuildingSearchResponse> responseList = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+//        BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
+//        int totalItems = buildingService.countTotalItems(buildingSearchRequest);
+//        buildingSearchResponse.setListResult(responseList);
+//        buildingSearchResponse.setTotalItems(totalItems);
+//        mav.addObject("buildingList", buildingSearchResponse);
+//
+//        return mav;
     }
 
 

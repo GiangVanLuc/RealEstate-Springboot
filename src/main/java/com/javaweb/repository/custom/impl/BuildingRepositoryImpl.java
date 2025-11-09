@@ -2,6 +2,7 @@ package com.javaweb.repository.custom.impl;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.data.domain.Pageable;
@@ -92,6 +93,21 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
     }
 
+
+//    @Override
+//    public List<BuildingSearchResponse> findAll(BuildingSearchBuilder buildingSearchBuilder) {
+//        // Sql Native
+//        StringBuilder sql = new StringBuilder("SELECT b.* FROM building b");
+//        joinTable(buildingSearchBuilder, sql);
+//        StringBuilder where = new StringBuilder(" WHERE 1 = 1");
+//        queryNomal(buildingSearchBuilder, where);
+//        querySpecial(buildingSearchBuilder, where);
+//        where.append(" GROUP BY b.id");
+//        sql.append(where);
+//        Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
+//        return query.getResultList();
+//
+//    }
 
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder, Pageable pageable) {

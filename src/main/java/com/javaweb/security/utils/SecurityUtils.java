@@ -9,11 +9,14 @@ import java.util.List;
 
 public class SecurityUtils {
 
+    // Get All Infomation of User Login
     public static MyUserDetail getPrincipal() {
         return (MyUserDetail) (SecurityContextHolder
                 .getContext()).getAuthentication().getPrincipal();
     }
 
+
+    // Get List Role
     public static List<String> getAuthorities() {
         List<String> results = new ArrayList<>();
         List<GrantedAuthority> authorities = (List<GrantedAuthority>)(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
