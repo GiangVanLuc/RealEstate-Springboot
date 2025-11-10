@@ -37,6 +37,18 @@ public class CustomerEntity extends BaseEntity {
     private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TransactionEntity> transactions = new ArrayList<>();
+
+
+    public List<TransactionEntity> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionEntity> transactions) {
+        this.transactions = transactions;
+    }
+
     public String getCompanyName() {
         return companyName;
     }

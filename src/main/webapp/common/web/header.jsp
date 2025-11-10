@@ -84,6 +84,9 @@
 					</security:authorize>
 					<security:authorize access = "isAuthenticated()">
 						<li class="nav-item"><a class="nav-link" href="#"> Xin chào <%=SecurityUtils.getPrincipal().getUsername()%></a></li>
+						<security:authorize access="hasAnyRole('MANAGER', 'STAFF')">
+							<li class="nav-item"><a class="nav-link" href="<c:url value='/admin/home'/>">ADMIN</a></li>
+						</security:authorize>
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/logout'/>">Thoát</a></li>
 					</security:authorize>
 				</ul>

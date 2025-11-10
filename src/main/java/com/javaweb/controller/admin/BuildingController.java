@@ -58,6 +58,7 @@ public class BuildingController {
         } else {
             buildingSearchRequest.setPage(1);
         }
+        DisplayTagUtils.of(request, buildingSearchRequest);
         if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
             buildingSearchRequest.setStaffId(SecurityUtils.getPrincipal().getId());
         }

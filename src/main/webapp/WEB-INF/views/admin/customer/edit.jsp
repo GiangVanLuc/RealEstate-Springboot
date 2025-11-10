@@ -4,7 +4,7 @@
 <c:url var="customerEditURL" value = "/admin/customer-edit"/>
 <html>
 <head>
-    <title>Chỉnh sửa thông tin</title>
+    <title>Thông tin khách hàng</title>
 </head>
 <body>
 
@@ -24,7 +24,7 @@
                     <a href="#">Trang chủ</a>
                 </li>
                 <c:if test="${not empty customerEdit.id}">
-                <li class="active">Chỉnh sửa khách hàng</li>
+                <li class="active">Chỉnh sửa thông tin khách hàng</li>
                 </c:if>
                 <c:if test="${empty customerEdit.id}">
                 <li class="active">Thêm khách hàng</li>
@@ -79,7 +79,10 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-group no-padding-right" for="status">Tình trạng</label>
                                 <div class="col-xs-9">
-                                    <form:input class="form-control" path="status" id="status"/>
+                                    <form:select class="form-control" path="status" id="status">
+                                        <form:option value="">---Chọn tình trạng---</form:option>
+                                        <form:options items="${statusCode}"/>
+                                    </form:select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -96,6 +99,8 @@
                                 </div>
                             </div>
                         <form:hidden path="id" id="customerId"/>
+                        <form:hidden path="modifiedDate" id="modifiedDate"/>
+                        <form:hidden path="modifiedBy" id="modifiedBy"/>
                         </form>
                     </div><!-- /.span -->
 
@@ -110,83 +115,43 @@
       <div class="col-xs-12">
         <div class="col-sm-12">
           <h3 class="header smaller lighter blue">${item.value}</h3>
-          <button class="btn btn-lg btn-primary" onclick="transactionType('${item.key}', '${customerEdit.id}')">
-            <i class="orange ace-icon fa fa-location-arrow bigger-130"></i>
-            Add
+          <button class="btn btn-lg btn-primary" onclick="transactionType('${item.key}','${customerEdit.id}')">
+            <i class="orange ace-icon fa fa-location-arrow bigger-130"></i>Add
           </button>
         </div>
-
-        <c:if test="${item.key == 'CSKH'}">
-    <div class="col-xs-12">
-      <table id="simple-table" class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Ngày tạo</th>
-            <th>Người tạo</th>
-            <th>Ngày sửa</th>
-            <th>Người sửa</th>
-            <th>Chi tiết giao dịch</th>
-            <th>Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-           <td>12/05/2025</td>
-           <td>Ngyễn văn A</td>
-           <td>12/09/2025</td>
-           <td>Ngyễn văn B</td>
-           <td>Gọi Điện và tư vấn</td>
-           <td>
-           <td>
-            <div class="hidden-sm hidden-xs btn-group">
-                <button class="btn btn-xs btn-info" data-toggle="tooltip" title="sửa thông tin giao dịch"
-                        onclick="UpdateTransaction(1)">
-                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                </button>
-            </div>
-            </td>
-</tr>
-        </tbody>
-      </table>
-    </div>
-  </c:if>
-
-  <c:if test="${item.key == 'DDX'}">
-    <div class="col-xs-12">
-      <table id="simple-table" class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-          <th>Ngày tạo</th>
-            <th>Người tạo</th>
-            <th>Ngày sửa</th>
-            <th>Người sửa</th>
-            <th>Chi tiết giao dịch</th>
-            <th>Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12/05/2025</td>
-           <td>Ngyễn văn A</td>
-           <td>12/09/2025</td>
-           <td>Ngyễn văn B</td>
-           <td>Gọi Điện và tư vấn</td>
-            <div class="hidden-sm hidden-xs btn-group">
-                <button class="btn btn-xs btn-info" data-toggle="tooltip" title="sửa thông tin giao dịch"
-                        onclick="UpdateTransaction(1)">
-                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                </button>
-            </div>
-            </td>
-</tr>
-        </tbody>
-      </table>
-    </div>
-  </c:if>
+        <div class="col-xs-12">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Ngày tạo</th>
+                <th>Người tạo</th>
+                <th>Ngày sửa</th>
+                <th>Người sửa</th>
+                <th>Chi tiết giao dịch</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="list" items="${item.key == 'CSKH' ? CSKHList : DDXList }">
+                    <tr>
+                        <td>${list.createdDate}</td>
+                        <td>${list.createdBy}</td>
+                        <td>${list.modifiedDate}</td>
+                        <td>${list.modifiedBy}</td>
+                        <td>${list.note}</td>
+                        <td>
+                            <div class="hidden-sm hidden-xs btn-group">
+                                <button class="btn btn-xs btn-primary" title="sửa chi tiết giao dịch" onclick="showFormTransaction(${list.id},${item.key})">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+          </table>
+        </div>
       </div>
-
-
-
 </c:forEach>
 </div>
 <!-- /.main-content -->
@@ -197,17 +162,17 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal"></button>
         <h4 class="modal-title">Nhập giao dịch</h4>
       </div>
       <div class="modal-body">
         <div class="form-group has-success">
-          <label for="transactionDetail" class="col-xs-12 col-sm-3 control-label no-padding-right">
+          <label for="transactionNote" class="col-xs-12 col-sm-3 control-label no-padding-right">
             Chi tiết giao dịch
           </label>
           <div class="col-xs-12 col-sm-9">
             <span class="block input-icon input-icon-right">
-              <input type="text" id="transactionDetail" class="width-100">
+              <input type="text" id="transactionNote" class="width-100">
             </span>
           </div>
         </div>
@@ -232,80 +197,148 @@
 
 
 <script>
-
     function transactionType(code, customerId){
         $('#transactionTypeModal').modal();
         $('#code').val(code);
         $('#customerId').val(customerId);
     }
 
-    function UpdateTransaction(id) {
+    function showFormTransaction(id, code) {
         $('#transactionTypeModal').modal();
         $('#id').val(id);
-
+        $('#code').val(code);
+        loadTransactionDetail(id);
     }
+
+    function loadTransactionDetail(id) {
+    $.ajax({
+        url: "/api/customer/" + id + "/details",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+            let row = '';
+            $.each(res.data, function (index, item) {
+                row += '<input type="text" id="transactionNote" class="width-100" value="' + item + '"/>';
+            });
+            $("#formSerial .input-icon").html(row);
+            $("#transactionTypeModal").modal();
+        },
+        error: function (res) {
+            window.alert("Fail");
+        }
+    });
+}
+
 
     $('#btnAddOrUpdateTransaction').click(function (e) {
         e.preventDefault();
         var data = {};
-        data['id'] = $('#id').val();
-        data['customerId'] = $('#customerId').val();
+        var id = $('#id').val();
+        data['id'] = id;
+        let customerId = $('#customerId').val();
+        data['customerId'] = customerId;
         data['code'] = $('#code').val();
-        data['transactionDetail'] = $('#transactionDetail').val();
+        data['note'] = $('#transactionNote').val();
         // customerId + code + transactionDetail
-
-        addTransaction(data);
+        if(id !== ''){
+            updateTransaction(data, customerId);
+        }
+        addTransaction(data, customerId);
     });
 
-    function addTransaction(data) {
+    function updateTransaction(id, data) {
+       $.ajax({
+            type: "PUT",
+            url: "/api/customer/transaction",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (res) {
+                alert("Update transaction success");
+                window.location.href="${customerEditURL}" + "-" + id;
+            },
+            error: function (res) {
+                alert("Update transaction error");
+                window.location.href = "<c:url value='/admin/customer-list'/>";
+            }
+       })
+    }
+
+    function addTransaction(data, customerId) {
         $.ajax({
             type: "POST",
             url: "${customerAPI}/transaction",
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
+            //dataType: "JSON",
             success: function (respond) {
-                console.log("success");
-                alert("add transaction success");
+                alert("Add transaction success");
+                window.location.href="${customerEditURL}" + "-" + customerId;
             },
             error: function (respond) {
-                console.log("error");
-                window.location.href = "<c:url value='/admin/customer-edit?message=error' />";
+                alert("Add transaction error");
+                window.location.href = "<c:url value='/admin/customer-list'/>";
             }
         })
     }
 
     $('#btnAddOrUpdateCustomer').click(function (e) {
-        e.preventDefault();
-        var data = {};
-        var formData = $('#listForm').serializeArray();
-        $.each(formData, function (i, v) {
-            data["" + v.name + ""]  = v.value;
-        })
-        updateAndCreateCustomer(data);
+    e.preventDefault();
+    var data = {};
+    var formData = $('#listForm').serializeArray();
+    $.each(formData, function (i, v) {
+        data["" + v.name + ""] = v.value;
     });
+    data['modifiedDate'] = $('#modifiedDate').val();
+    data['modifiedBy'] = $('#modifiedBy').val().toString();
 
-    function updateAndCreateCustomer(data) {
-        // call API
-        $.ajax({
-            type: "POST",
-            url: "${customerAPI}",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: "JSON",
-            success: function (respond) {
-                window.location.href = '<c:url value = "/admin/customer-list?message=success" />';
-            },
-            error: function (respond) {
+    var customerId = $('#customerId').val(); // Lấy ID
 
-                window.location.href = '<c:url value = "/admin/customer-edit?message=error" />';
-            }
-        })
-}
-    $('#btnCancel').click(function () {
-        window.location.href = "${customerAPI}";
+    if (customerId) {
+        // Nếu có ID, đây là Cập nhật (UPDATE)
+        updateCustomer(data, customerId);
+    } else {
+        // Nếu không có ID, đây là Thêm mới (ADD)
+        addCustomer(data);
+    }
 });
 
+    function addCustomer(data) {
+        $.ajax({
+            type: "POST", // Dùng POST
+            url: "${customerAPI}", // URL không có ID
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            // dataType: "JSON",
+            success: function (respond) {
+                alert("success");
+                window.location.href = '<c:url value = "/admin/customer-list" />';
+            },
+            error: function (respond) {
+                window.location.href = '<c:url value = "/admin/customer-edit?message=error" />';
+            }
+        });
+    }
+
+    function updateCustomer(data, id) {
+        $.ajax({
+            type: "PUT", // ⭐ Sửa thành PUT
+            url: "${customerAPI}/" + id, // ⭐ Thêm ID vào URL
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            // dataType: "JSON",
+            success: function (respond) {
+                window.location.href = '<c:url value = "/admin/customer-list?message=update_success" />';
+            },
+            error: function (respond) {
+                window.location.href = '<c:url value = "/admin/customer-edit-' + id + '?message=error" />';
+            }
+        });
+    }
+
+    $('#btnCancel').click(function () {
+    // Bạn đã định nghĩa customerListURL ở đầu file
+    window.location.href = '<c:url value="/admin/customer-list" />';
+});
 </script>
 </body>
 </html>

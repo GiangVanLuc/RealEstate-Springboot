@@ -2,15 +2,15 @@ package com.javaweb.model.dto;
 
 public class TransactionDTO extends AbstractDTO{
     private String code;
-    private String transactionDetail;
+    private String note;
     private Long customerId;
 
-    public String getTransactionDetail() {
-        return transactionDetail;
+    public String getNote() {
+        return note;
     }
 
-    public void setTransactionDetail(String transactionDetail) {
-        this.transactionDetail = transactionDetail;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getCode() {
