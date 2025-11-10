@@ -32,6 +32,16 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "is_active")
+    private Boolean active;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();

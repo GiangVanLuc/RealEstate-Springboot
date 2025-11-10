@@ -271,12 +271,15 @@
         $('#listForm').submit();
     });
 
+
     // Xóa 1 customer
     function deleteCustomer(customerId) {
         showAlertBeforeDelete(function () {
             handleDeleteCustomer([customerId]);
-})
+        })
     }
+
+
 
     // Xóa nhiều customer
     $('#btnDeleteCustomer').click(function (e) {
@@ -288,27 +291,27 @@
             alert("Vui lòng chọn ít nhất một khách hàng để xóa!");
             return;
         }
-        deleteCustomers(customerIds);
+        handleDeleteCustomer(customerIds);
     });
 
     // Hàm xóa (AJAX DELETE)
-    function deleteCustomers(data) {
-        if (confirm("Bạn có chắc chắn muốn xóa?")) {
-            $.ajax({
-                type: "DELETE",
-                url: "${customerAPI}", // URL API, server sẽ nhận list ID từ Request Body
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                success: function (response) {
-                    console.log("Success Delete");
-                    window.location.href = '<c:url value = "/admin/customer-list?message=delete_success" />';
-                },
-                error: function (response) {
-                    console.log("Fail Delete");
-                    window.location.href = '<c:url value = "/admin/customer-list?message=error" />';
-                }
-            })
-        }
+    function handleDeleteCustomer(data) {
+
+        $.ajax({
+            type: "DELETE",
+            url: "${customerAPI}", // URL API, server sẽ nhận list ID từ Request Body
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+                alert("Delete customer successfully!");
+                window.location.href = '<c:url value = "/admin/customer-list?message=delete_success" />';
+            },
+            error: function (response) {
+                console.log("Fail Delete");
+                window.location.href = '<c:url value = "/admin/customer-list?message=error" />';
+            }
+        })
+
     }
 
     // Checkbox "Chọn tất cả"

@@ -1,7 +1,9 @@
 package com.javaweb.api.admin;
 
 
+import com.javaweb.model.dto.AssignmentDTO;
 import com.javaweb.model.dto.CustomerDTO;
+import com.javaweb.model.dto.StaffAssignmentDTO;
 import com.javaweb.model.dto.TransactionDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.TransactionResponseDTO;
@@ -13,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController(value = "customerAPIOfAdmin")
 @Transactional
@@ -41,18 +45,25 @@ public class CustomerAPI {
     @DeleteMapping
     public void deleteCustomer(@RequestBody List<Long> ids) {
         if(ids.size() > 0) {
-            //customerService.deleteCustomerByIds(Ids);
+            customerService.deleteCustomer(ids);
         }
     }
 
 
 
-//    @GetMapping("/{id}/staffs")
-//    public ResponseDTO loadStaffs(@PathVariable Long id) {
-//        // Dummy implementation for demonstration
-//        ResponseDTO responseDTO = buildingService.listStaffs(id);
-//        return responseDTO;
-//    }
+
+    @GetMapping("/{customerId}/staffs")
+    public ResponseEntity<?> getStaffs(@PathVariable Long customerId) {
+        List<StaffAssignmentDTO> staffs = customerService.findStaffsByCustomerId(customerId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", staffs);
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/assignment")
+    public ResponseEntity<Void> assignCustomer(@RequestBody AssignmentDTO assignmentDTO) {
+        customerService.assignCustomer(assignmentDTO);
+        return ResponseEntity.ok().build();
+    }
 
 
     @PostMapping("/transaction")
