@@ -56,6 +56,12 @@ public class HomeController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/register" , method = RequestMethod.GET)
+	public ModelAndView register() {
+		ModelAndView mav = new ModelAndView("/account/register");
+		return mav;
+	}
+
 	@RequestMapping(value = "/access-denied", method = RequestMethod.GET)
 	public ModelAndView accessDenied() {
 		return new ModelAndView("redirect:/login?accessDenied");

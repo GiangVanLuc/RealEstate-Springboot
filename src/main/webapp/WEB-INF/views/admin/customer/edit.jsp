@@ -141,7 +141,7 @@
                         <td>${list.note}</td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
-                                <button class="btn btn-xs btn-primary" title="sửa chi tiết giao dịch" onclick="showFormTransaction(${list.id},${item.key})">
+                                <button class="btn btn-xs btn-primary" title="sửa chi tiết giao dịch" onclick="showFormTransaction(${list.id},'${item.key}')">
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </button>
                             </div>

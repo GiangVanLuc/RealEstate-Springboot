@@ -1,6 +1,4 @@
 package com.javaweb.repository.custom.impl;
-
-
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.dto.MyUserDetail;
@@ -62,7 +60,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         }
 
         if(authorityString.equals("ROLE_STAFF")){
-            sql.append(" AND u.username LIKE '%" + userDetail.getUsername() + "%' ");
+            sql.append(" AND u.username LIKE '" + userDetail.getUsername() + "%' ");
         }
     }
 

@@ -7,8 +7,7 @@ import java.util.TreeMap;
 public enum StatusCode {
     CHUA_XU_LY("Chưa xử lý"),
     DANG_XU_LY("Đang xử lý"),
-    DA_XU_LY("Đã xử lý"),
-    HUY("Hủy");
+    DA_XU_LY("Đã xử lý");
 
     private final String statusName;
 

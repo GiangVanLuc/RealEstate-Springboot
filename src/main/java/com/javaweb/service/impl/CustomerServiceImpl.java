@@ -44,6 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerEntity.setCreatedBy(customerDTO.getModifiedBy());
             customerEntity.setCreatedDate(customerDTO.getModifiedDate());
         }
+        customerEntity.setActive(true);
         customerRepository.save(customerEntity);
     }
 

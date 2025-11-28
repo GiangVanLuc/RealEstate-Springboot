@@ -6,7 +6,7 @@
     <div class="footer-inner">
         <div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">NHÓM 4 MÔN OOP</span>
+							<span class="blue bolder">NHÓM 18 MÔN CSDL</span>
 						</span>
 
             &nbsp; &nbsp;

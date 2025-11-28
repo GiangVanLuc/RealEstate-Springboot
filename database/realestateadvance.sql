@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `estateadvance` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `estateadvance`;
+CREATE DATABASE  IF NOT EXISTS `estateadvance2` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `estateadvance2`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
--- Host: localhost    Database: estateadvance
+-- Host: localhost    Database: estateadvance2
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
